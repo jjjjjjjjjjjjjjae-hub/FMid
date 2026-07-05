@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus VIP Menu | Almas.offikal</title>
+    <style>
+        /* Сіздің барлық стиліңіз осында сақталды. Толық дизайн сақталады. */
+        body { margin: 0; background: linear-gradient(135deg, #040406, #0c0c16); color: white; font-family: sans-serif; overflow: hidden; }
+        .mod-menu { position: absolute; z-index: 10; display: none; background: rgba(16, 16, 22, 0.85); padding: 20px; border: 1px solid #00f3ff; border-radius: 12px; }
+        .active { display: block; }
+        .close-btn { color: red; cursor: pointer; font-size: 20px; }
+        .feature-item { margin: 10px 0; display: flex; justify-content: space-between; }
+        .floating-circle { width: 60px; height: 60px; background: #00f3ff; border-radius: 50%; text-align: center; line-height: 60px; font-weight: bold; cursor: pointer; position: absolute; top: 20px; left: 20px; }
+    </style>
+</head>
+<body>
+    <div class="floating-circle" id="draggableIcon" onclick="openMenu()">VIP</div>
+    
+    <div class="mod-menu" id="modMenu">
+        <div class="close-btn" onclick="closeMenu()">ЖАБУ (X)</div>
+        <h3>Nexus VIP</h3>
+        
+        <div class="feature-item">
+            <span>⚡ AIM KILL (Instant)</span>
+            <input type="checkbox" class="mod-toggle" data-feature="AIM KILL">
+        </div>
+        
+        <div class="feature-item">
+            <span>ESP Box Premium</span>
+            <input type="checkbox" class="mod-toggle" data-feature="ESP Box">
+        </div>
+    </div>
+
+    <script>
+        function openMenu() { document.getElementById("modMenu").classList.add("active"); }
+        function closeMenu() { document.getElementById("modMenu").classList.remove("active"); }
+        
+        // Java жүйесімен байланыс орнату
+        document.querySelectorAll('.mod-toggle').forEach(toggle => {
+            toggle.addEventListener('change', (e) => {
+                let featureName = e.target.getAttribute('data-feature');
+                if (typeof ModBridge !== 'undefined') {
+                    ModBridge.toggleFeature(featureName, e.target.checked);
+                } else {
+                    console.log(featureName + " -> " + e.target.checked);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
